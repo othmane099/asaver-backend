@@ -10,6 +10,7 @@ import com.odev.asaver.validator.ApplicationValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
+    @Transactional
     public ApplicationDto save(ApplicationDto dto) {
         List<String> errors = ApplicationValidator.validate(dto);
         if (!errors.isEmpty()){
@@ -37,12 +39,18 @@ public class ApplicationServiceImpl implements ApplicationService {
             throw new ASaverException("Application is not valid", errors);
         }
 
+        boolean isExist = applicationRepository.findByName(dto.getName()).isPresent();
+
+        if (isExist)
+            throw new ASaverException("This Application "+dto.getName()+" already exist!");
+
         return ApplicationDto.fromEntity(
                 applicationRepository.save(ApplicationDto.toEntity(dto))
         );
     }
 
     @Override
+    @Transactional
     public ApplicationDto findById(Long id) {
 
         if (id == null){
@@ -55,18 +63,20 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public List<ApplicationDto> findAllByName(String name) {
+    @Transactional
+    public ApplicationDto findByName(String name) {
         if (!StringUtils.hasLength(name)){
             log.error("name is null");
             return null;
         }
 
-        return applicationRepository.findAllByName(name).stream()
+        return applicationRepository.findByName(name)
                 .map(ApplicationDto::fromEntity)
-                .collect(Collectors.toList());
+                .orElseThrow(()-> new ASaverException("This Application "+name+" already exist!"));
     }
 
     @Override
+    @Transactional
     public List<ApplicationDto> findAll() {
         return applicationRepository.findAll().stream()
                 .map(ApplicationDto::fromEntity)
@@ -74,6 +84,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         if (id == null){
             log.error("Application ID is null");

@@ -10,7 +10,7 @@ public interface ApplicationService {
 
     ApplicationDto findById(Long id);
 
-    List<ApplicationDto> findAllByName(String name);
+    ApplicationDto findByName(String name);
 
     List<ApplicationDto> findAll();
 

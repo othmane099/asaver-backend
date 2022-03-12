@@ -30,8 +30,8 @@ public class ApplicationController implements ApplicationApi {
     }
 
     @Override
-    public List<ApplicationDto> findAllByName(String name) {
-        return applicationService.findAllByName(name);
+    public ApplicationDto findByName(String name) {
+        return applicationService.findByName(name);
     }
 
     @Override

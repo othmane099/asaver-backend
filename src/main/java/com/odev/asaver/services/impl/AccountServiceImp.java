@@ -8,6 +8,7 @@ import com.odev.asaver.validator.AccountValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class AccountServiceImp implements AccountService {
     }
 
     @Override
+    @Transactional
     public AccountDto save(AccountDto dto) {
         List<String> errors = AccountValidator.validate(dto);
         if (!errors.isEmpty()){
@@ -38,6 +40,7 @@ public class AccountServiceImp implements AccountService {
     }
 
     @Override
+    @Transactional
     public AccountDto findById(Long id) {
         if (id == null){
             log.error("Account ID is null");
@@ -49,6 +52,7 @@ public class AccountServiceImp implements AccountService {
     }
 
     @Override
+    @Transactional
     public List<AccountDto> findAllByEmail(String email) {
         if (!StringUtils.hasLength(email)){
             log.error("email is null");
@@ -61,6 +65,7 @@ public class AccountServiceImp implements AccountService {
     }
 
     @Override
+    @Transactional
     public List<AccountDto> findAllByPassword(String password) {
         if (!StringUtils.hasLength(password)){
             log.error("password is null");

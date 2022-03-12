@@ -1,6 +1,5 @@
 package com.odev.asaver.controller.api;
 
-import com.odev.asaver.dto.AccountDto;
 import com.odev.asaver.dto.ApplicationDto;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +17,7 @@ public interface ApplicationApi {
     ApplicationDto findById(@PathVariable("idApplication") Long idApplication);
 
     @GetMapping(value = APP_ROOT + "/applications/n/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
-    List<ApplicationDto> findAllByName(@PathVariable("name") String name);
+    ApplicationDto findByName(@PathVariable("name") String name);
 
     @GetMapping(value = APP_ROOT + "/applications/all", produces = MediaType.APPLICATION_JSON_VALUE)
     List<ApplicationDto> findAll();
