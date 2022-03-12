@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>AMarket</title>
+
+  <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css} "/>
+  <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.min.css} "/>
+</head>
+<body>
+
+<nav class="navbar navbar-light bg-danger">
+  <div class="container-fluid justify-content-start">
+    <form class="d-flex m-lg-auto" >
+      <input type="text">
+      <button class="btn btn-sm btn-info" type="submit">
+        <span class="fa fa-search"></span>
+      </button>
+    </form>
+    <form method="POST" >
+      <button class="btn btn-primary btn-sm" type="submit">
+        <span class="fa fa-sign-out-alt"></span>
+      </button>
+    </form>
+  </div>
+</nav>
+<div class="container">
+  <!--Start Main Page-->
+  <div class="col-md-12">
+    <div class="main-page-container">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-container">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#navbarSupportedContent"
+                  aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <form class="d-flex m-lg-auto"
+                  th:method="GET">
+              <input class="form-control me-2" type="search" placeholder="Search" >
+              <button class="btn btn-outline-primary btn-sm" type="submit">
+                <span class="fa fa-search"></span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </nav>
+
+      <section>
+        <div class="row">
+          <div class="col-md-2" th:each="app : ${applications}">
+            <div class="card mt-1 bg-light">
+              <a>
+                <h5 class="text-center m-1" th:text="${app.name}">Product Name</h5>
+              </a>
+              <div class="m-1 row">
+                <a class="btn btn-primary col me-1 fas fa-user" ></a>
+                <a class="btn btn-danger col ms-1 fas fa-trash" ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!--End Main Page-->
+</div>
+
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>
